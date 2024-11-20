@@ -1,6 +1,6 @@
 """ Analysis Tools Module
 
--- for post-classification/validation
+Contains functions to analyze data post-CNN-classification and validation.
 """
 
 # some functions might be nice :)

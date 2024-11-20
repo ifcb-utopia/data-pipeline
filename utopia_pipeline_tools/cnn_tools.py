@@ -1,6 +1,13 @@
 """CNN Tools Module
 
-DESCRIPTION
+Functions to work with Keras CNNs used to classify IFCB phytoplankton images. 
+
+- preprocess_input(image): Prepares an image or a list of images to be input
+  into the CNN.
+- load_local_model(json_file_path, h5_file_path): Loads a Keras CNN from local 
+  .json and .h5 files. 
+- load_cloud_model(): NOT YET WRITTEN
+- predict_labels(): NOT YET WRITTEN
 """
 
 # imports
@@ -11,7 +18,8 @@ from tensorflow import keras
 # functions
 
 def preprocess_input(image):
-    """ Takes in an IFCB .png and resizes it to fit the input dimensions of the CNN.
+    """ Takes in an IFCB .png (or list of IFCB .pngs) and resizes it to fit the 
+    input dimensions of the CNN.
 
     :param image: IFCB .png file or list of files
     :type image: list
@@ -40,7 +48,8 @@ def preprocess_input(image):
     # Makes a black border of 128x128 pixels around the image, so either
     # dimension less than 128 would be padded to 128
     color = [0, 0, 0] # RGB = 0,0,0 -> Black
-    rescaled_image = cv2.copyMakeBorder(img, top, bottom, left, right, cv2.BORDER_CONSTANT, value=color)
+    rescaled_image = cv2.copyMakeBorder(img, top, bottom, left, right, 
+                                        cv2.BORDER_CONSTANT, value=color)
     return(rescaled_image)
 
 def load_local_model(json_file_path, h5_file_path):
@@ -67,9 +76,19 @@ def load_local_model(json_file_path, h5_file_path):
     return loaded_model
 
 def load_cloud_model():
-    # write function here :) ###########################################################################################
+    # write function here :) ##################################################
     pass
 
 def predict_labels():
-    # write function here; use dictionary in init? ###########################################################################
+    # write function here; use dictionary in init? ############################
+    # need to add a option to specify origin filepath if predicting labels of 
+    # locally stored images. Something like:
+    # Images stored locally? Enter the full filepath to where the ml folder is
+    # located. 
+    # string = 'C:/filepath/to/location/'
+    # if string[-1] == /:
+    #   pass
+    # else:
+    #   string.append('/')
+    # png_df['filepath'] = string + png_df['filepath']
     pass
