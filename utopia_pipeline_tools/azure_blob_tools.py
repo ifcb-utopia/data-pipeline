@@ -91,7 +91,7 @@ def list_containers_in_blob(connection_string=config_info['connection_string']):
 
 def list_files_in_blob(container, 
                        connection_string=config_info['connection_string'], 
-                       png_only=True):
+                       selection='png'):
     """
     Returns a Pandas dataframe of image filepaths if png_only parameter is true.
     Otherwise, this function returns a list of the filepaths of all files in the
@@ -102,13 +102,16 @@ def list_files_in_blob(container,
     :param connection_string: The blob connection string. Defaults to the 
     connection string saved in the __init__ file
     :type connection_string: str, optional
-    :param png_only: Indicates whether to retrieve all files (False), or images 
-    only (True); default value is True
-    :type png_only: bool, optional
+    :param selection: Indicates which files to select, default is 'png' which 
+    returns only images, but other options are 'csv' and 'all' to return csv 
+    files and all files, respectively. 
+    :type png_only: str, optional
     """
     # test configuration
     if config_info['connection_string'] is None:
         print("ACTION REQUIRED: Enter connection string information.")
+    elif selection not in ['png', 'csv', 'all']:
+        print("ACTION REQUIRED: Enter valid selection kwarg.")
     else:
         # connect to Azure blob
         blob_service_client = BlobServiceClient.from_connection_string(
@@ -119,12 +122,19 @@ def list_files_in_blob(container,
         blob_list = container_client.list_blobs()
         filepaths = [blob.name for blob in blob_list]
 
-        if png_only is True:
+        if selection == 'png':
             # select only the image files
             png_list = [x for x in filepaths if '.png' in x]
             png_df = pd.DataFrame({'filepath': png_list})
 
             return png_df
         
-        else:
+        elif selection == 'csv':
+            # select only csv files
+            csv_list = [x for x in filepaths if '.csv' in x]
+            png_df = pd.DataFrame({'filepath': csv_list})
+
+            return png_df
+        
+        elif selection == 'all':
             return filepaths

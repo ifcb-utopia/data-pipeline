@@ -39,3 +39,12 @@ _Notes:_
 _Process:_
 In my `process_raw_ifcb.py` notebook, I was getting this attribute error. I found this (https://www.mathworks.com/matlabcentral/answers/362824-no-module-named-matlab-engine-matlab-is-not-a-package) thread on mathworks so I followed the advice of one comment that said to install the matlabengine package with `pip install matlabengine`. I successfully installed matlabengine version 24.2.1 and re-tried my notebook. I can now import `matlab.engine` in my notebook!
 
+### TypeError when working with tensorflow
+
+_Notes:_  
+- miniconda3 prompt
+- Tensorflow version 2.16.2
+- Python version 3.10.14
+
+_Process:_  
+Another tensorflow-related issue! In my `create_dataset_csv.py` marimo notebook, I attempted to predict plankton labels with the CNN and the cell gave me a TypeError('Could not locate class Model...'). I've encountered this error before and resolved it by changing the tensorflow version to 2.13.1. I will also change the `setup.py` default tensorflow version.
